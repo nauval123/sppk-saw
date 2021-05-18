@@ -45,15 +45,15 @@
                         </tr>
                         @foreach($data as $datapegawai)
                             <tr>
-                                <td>{{$datapegawai->id}}</td>
-                                <td>{{$datapegawai->Jabatan}}</td>
-                                <td>{{$datapegawai->Nama}}</td>
-                                <td>{{$datapegawai->Kedisiplinan}}</td>
-                                <td>{{$datapegawai->Lamakerja}}</td>
-                                <td>{{$datapegawai->Pendidikan}}</td>
-                                <td>{{$datapegawai->Keahlian}}</td>
-                                <td>{{$datapegawai->StatusPernikahan}}</td>
-                                <td>{{$datapegawai->nilai_preferensi}}</td>
+                                <td>{{$datapegawai['id']}}</td>
+                                <td>{{$datapegawai['Jabatan']}}</td>
+                                <td>{{$datapegawai['Nama']}}</td>
+                                <td>{{$datapegawai['Kedisiplinan']}}</td>
+                                <td>{{$datapegawai['Lamakerja']}}</td>
+                                <td>{{$datapegawai['Pendidikan']}}</td>
+                                <td>{{$datapegawai['Keahlian']}}</td>
+                                <td>{{$datapegawai['StatusPernikahan']}}</td>
+                                <td>{{$datapegawai['nilai_preferensi']}}</td>
                             </tr>
                         @endforeach
                     </table>

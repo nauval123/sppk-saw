@@ -84,15 +84,15 @@ class sawController extends Controller
         return $data;
     }
 
-//    function sorting($a, $b) {
-//        return $a['nilai_preferensi'] < $b['nilai_preferensi'];
-//    }
-    function sorting($data) {
-        var_dump($data);
-//        usort($data,function ($a,$b){
-//            return $a['nilai_preferensi'] < $b['nilai_preferensi'];
-//        });
+    function sorting($a, $b) {
+        return $a['nilai_preferensi'] < $b['nilai_preferensi'];
     }
+//    function sorting($data) {
+//        var_dump($data);
+////        usort($data,function ($a,$b){
+////            return $a['nilai_preferensi'] < $b['nilai_preferensi'];
+////        });
+//    }
 
     public function preferensi(){
         $tmp = Setting::all();
@@ -107,6 +107,7 @@ class sawController extends Controller
         $c4 = json_decode($tmpdata['c4']);
         $c5 = json_decode($tmpdata['c5']);
         $temp_data=[];
+        $datapref=[];
         $datanormalisasi = $this->prosesnormalisasi();
         foreach ($datanormalisasi as $datareferensi) {
             $datareferensi->Kedisiplinan = $datareferensi->Kedisiplinan*$c1->weight;
@@ -117,16 +118,23 @@ class sawController extends Controller
             $datareferensi->nilai_preferensi = $datareferensi->Kedisiplinan+$datareferensi->Lamakerja+$datareferensi->Pendidikan+$datareferensi->Keahlian+$datareferensi->StatusPernikahan;
         }
         foreach($datanormalisasi as $option){
+            $temp_data["id"] = $option->id;
+            $temp_data["Jabatan"] = $option->Jabatan;
+            $temp_data["Nama"] = $option->Nama;
             $temp_data["Kedisiplinan"] = $option->Kedisiplinan;
             $temp_data["Lamakerja"] = $option->Lamakerja;
             $temp_data["Pendidikan"] = $option->Pendidikan;
             $temp_data["Keahlian"] = $option->Keahlian;
             $temp_data["StatusPernikahan"] = $option->StatusPernikahan;
             $temp_data["nilai_preferensi"] = $option->nilai_preferensi;
+            array_push($datapref,$temp_data);
         }
-//        usort($temp_data,array("sawController","sorting"));
-        $this->sorting($temp_data);
-        var_dump($temp_data);
-//        return view('admin.matrixreferensi',['data'=>$temp_data]);
+//        var_dump($datapref);
+        usort($datapref,array('App\Http\Controllers\sawController',"sorting"));
+//        $this->sorting($datapref);
+//        var_dump($temp_data);
+//        var_dump($datapref);
+//        $datasiap=(object)$datapref;
+        return view('admin.matrixreferensi',["data"=>$datapref]);
     }
 }
