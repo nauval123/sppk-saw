@@ -44,7 +44,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="">Kedisiplinan (C1)  </label>
+                                            <label for="">Penghasilan (C1)  </label>
                                             <select name="w_c1" id="" class="form-control">
                                                 <option value="0.2" @if ($c11->weight == 0.2)
                                                     {{ "selected" }} @endif >Sangat Rendah </option>
@@ -82,7 +82,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="">Lama Kerja (C2)  </label>
+                                            <label for="">Jenis Lantai (C2)  </label>
                                             <select name="w_c2" id="" class="form-control">
                                                 <option value="0.2" @if ($c22->weight == 0.2)
                                                     {{ "selected" }} @endif >Sangat Rendah </option>
@@ -120,7 +120,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="">Pendidikan (C3)  </label>
+                                            <label for="">Jumlah Anggota Keluarga (C3)  </label>
                                             <select name="w_c3" id="" class="form-control">
                                                 <option value="0.2" @if ($c33->weight == 0.2)
                                                     {{ "selected" }} @endif >Sangat Rendah </option>
@@ -158,7 +158,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="">Keahlian (C4)  </label>
+                                            <label for="">Jenis Dinding (C4)  </label>
                                             <select name="w_c4" id="" class="form-control">
                                                 <option value="0.2" @if ($c44->weight == 0.2)
                                                     {{ "selected" }} @endif >Sangat Rendah </option>
@@ -196,7 +196,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="">Status Pernikahan (C5)  </label>
+                                            <label for="">Status PHK (C5)  </label>
                                             <select name="w_c5" id="" class="form-control">
                                                 <option value="0.2" @if ($c55->weight == 0.2)
                                                     {{ "selected" }} @endif >Sangat Rendah </option>

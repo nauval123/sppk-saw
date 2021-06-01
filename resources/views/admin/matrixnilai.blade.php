@@ -25,7 +25,7 @@
             <div class="card">
                 <div class="section-header">
                     <div class="container-fluid">
-                        <h1>Data Pegawai (Matrik Nilai)</h1>
+                        <h1>Data Penduduk Desa (Matrik Nilai)</h1>
                     </div>
                 </div>
                 </div>
@@ -34,22 +34,29 @@
                         <table class="table table-striped">
                             <tr>
                                 <th>id </th>
-                                <th>Jabatan</th>
-                                <th>Nama</th>
-                                <th>Kedisiplinan</th>
-                                <th>Lama Kerja</th>
-                                <th>Keahlian</th>
-                                <th>StatusPernikahan</th>
+                                <th>NIK</th>
+                                <th>Nama KK</th>
+                                <th>Penghasilan</th>
+                                <th>Jenis Lantai</th>
+                                <th>Jumlah Anggota Keluarga</th>
+                                <th>Jenis Dinding Rumah</th>
+                                <th>Status PHK</th>
+
                             </tr>
-                            @foreach($data as $datapegawai)
+                            @foreach($data as $datapenduduk)
                                 <tr>
-                                    <td>{{$datapegawai->id}}</td>
-                                    <td>{{$datapegawai->Jabatan}}</td>
-                                    <td>{{$datapegawai->Nama}}</td>
-                                    <td>{{$datapegawai->Kedisiplinan}}</td>
-                                    <td>{{$datapegawai->Lamakerja}}</td>
-                                    <td>{{$datapegawai->Keahlian}}</td>
-                                    <td>{{$datapegawai->StatusPernikahan}}</td>
+                                    <td>{{$datapenduduk->id}}</td>
+                                    <td>{{$datapenduduk->NIK}}</td>
+                                    <td>{{$datapenduduk->Nama}}</td>
+                                    <td>{{number_format($datapenduduk->Penghasilan, 2, '.', '')}}</td>
+                                    {{--                                    <td>{{$datapenduduk->Penghasilan}}</td>--}}
+                                    <td>{{number_format($datapenduduk->JenisLantai, 2, '.', '')}}</td>
+                                    {{--                                    <td>{{$datapenduduk->JenisLantai}}</td>--}}
+                                    <td>{{number_format($datapenduduk->JumlahAnggota, 2, '.', '')}}</td>
+                                    {{--                                    <td>{{$datapenduduk->JumlahAnggota}}</td>--}}
+                                    <td>{{number_format($datapenduduk->JenisDinding, 2, '.', '')}}</td>
+                                    {{--                                    <td>{{$datapenduduk->JenisDinding}}</td>--}}
+                                    <td>{{number_format($datapenduduk->StatusPhk, 2, '.', '')}}</td>
                                 </tr>
                             @endforeach
                         </table>

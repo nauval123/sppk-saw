@@ -25,7 +25,7 @@
             <div class="card">
                 <div class="section-header">
                     <div class="container-fluid">
-                        <h1>Data Pegawai (Matrik Nilai)</h1>
+                        <h1>Data Penduduk (Matrik Nilai)</h1>
                     </div>
                 </div>
             </div>
@@ -34,25 +34,25 @@
                     <table class="table table-striped">
                         <tr>
                             <th>id </th>
-                            <th>Jabatan</th>
-                            <th>Alternatif</th>
-                            <th>Kedisiplinan</th>
-                            <th>Lama Kerja</th>
-                            <th>Pendidikan</th>
-                            <th>Keahlian</th>
-                            <th>StatusPernikahan</th>
+                            <th>NIK</th>
+                            <th>Nama KK</th>
+                            <th>Penghasilan</th>
+                            <th>Jenis Lantai</th>
+                            <th>Jumlah Anggota Keluarga</th>
+                            <th>Jenis Dinding Rumah</th>
+                            <th>Status PHK</th>
                             <th>Nilai total</th>
                         </tr>
                         @foreach($data as $datapegawai)
                             <tr>
                                 <td>{{$datapegawai['id']}}</td>
-                                <td>{{$datapegawai['Jabatan']}}</td>
+                                <td>{{$datapegawai['NIK']}}</td>
                                 <td>{{$datapegawai['Nama']}}</td>
-                                <td>{{$datapegawai['Kedisiplinan']}}</td>
-                                <td>{{$datapegawai['Lamakerja']}}</td>
-                                <td>{{$datapegawai['Pendidikan']}}</td>
-                                <td>{{$datapegawai['Keahlian']}}</td>
-                                <td>{{$datapegawai['StatusPernikahan']}}</td>
+                                <td>{{$datapegawai['Penghasilan']}}</td>
+                                <td>{{$datapegawai['JenisLantai']}}</td>
+                                <td>{{$datapegawai['JumlahAnggota']}}</td>
+                                <td>{{$datapegawai['JenisDinding']}}</td>
+                                <td>{{$datapegawai['StatusPhk']}}</td>
                                 <td>{{$datapegawai['nilai_preferensi']}}</td>
                             </tr>
                         @endforeach

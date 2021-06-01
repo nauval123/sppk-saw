@@ -5,7 +5,7 @@
         <div class="section-header">
             <div class="container-fluid">
                 <div></div>
-                <h1>Halo {{auth()->user()->name}}! </h1>
+                <h1>Halo {{auth()->user()->name}} </h1>
             </div>
         </div>
         @if(session('pesan'))
@@ -21,186 +21,141 @@
             </div>
         @endif
         <div class="section-body">
-
-            <div class="card">
-                <div class="section-header">
-                    <div class="container-fluid">
-                        <h1>Data Pegawai</h1>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="card-box tilebox-one">
+                        <i class="fi-tag float-right"></i>
+                        <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>
+                        <h4 class="mb-3"><span data-plugin="counterup">{{$jumlahpenduduk}}</span></h4>
+                        <span class="badge badge-primary"></span>
                     </div>
                 </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="card-box tilebox-one">
+                        <i class="fi-box float-right"></i>
+                        <h6 class="text-muted text-uppercase mb-3">Jumlah Orang Ter-PHK</h6>
+                        <h4 class="mb-3" data-plugin="counterup">{{$phk}}</h4>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="card-box tilebox-one">
+                        <i class="fi-layers float-right"></i>
+                        <h6 class="text-muted text-uppercase mb-3">Penghasilan dibawah 600 ribu</h6>
+                        <h4 class="mb-3"><span data-plugin="counterup">{{$upah}}</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
                 <div class="card-header">
                     <h4>
                         <a href="{{route('create')}}" class="btn btn-primary">
                             +  data baru
                         </a>
                     </h4>
-                    <div class="card-header-action">
-{{--                        <form method="post" action="{{route('add')}}">--}}
-{{--                            @csrf--}}
-{{--                            <div class="input-group">--}}
-{{--                                <input type="text" name="cari" class="form-control" placeholder="cari nama barang/id" required>--}}
-{{--                                <div class="input-group-btn">--}}
-{{--                                    <button class="btn btn-primary">cari</button>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </form>--}}
-                    </div>
                 </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
+                <div class="card-body">
+                    <div class="datatable">
+                        <table class="table table-bordered table-hover" id="dataTable" width="100%"
+                               cellspacing="0">
+                            <thead>
                             <tr>
                                 <th>id </th>
-                                <th>Jabatan</th>
-                                <th>Nama</th>
-                                <th>Kedisiplinan</th>
-                                <th>Lama Kerja</th>
-                                <th>Pendidikan</th>
-                                <th>Keahlian</th>
-                                <th>StatusPernikahan</th>
+                                <th>NIK</th>
+                                <th>Nama KK</th>
+                                <th>Penghasilan</th>
+                                <th>Jenis Lantai</th>
+                                <th>Jumlah Anggota Keluarga</th>
+                                <th>Jenis Dinding Rumah</th>
+                                <th>Status PHK</th>
                                 <th>aksi</th>
-
                             </tr>
+                            </thead>
+                            <tbody>
                             @foreach($data as $datapegawai)
 
                                 <tr>
+
                                     <td>{{$datapegawai->id}}</td>
-                                    <td>{{$datapegawai->Jabatan}}</td>
+                                    <td>{{$datapegawai->NIK}}</td>
                                     <td>{{$datapegawai->Nama}}</td>
+
                                     <td>
-                                        @if($datapegawai->Kedisiplinan==0.01)
-                                            95.0%-96.25%
-                                        @elseif($datapegawai->Kedisiplinan==0.333)
-                                            96.251% - 97.5%
-                                        @elseif($datapegawai->Kedisiplinan==0.667)
-                                            97.501% - 98.750%
-                                        @elseif($datapegawai->Kedisiplinan==1)
-                                            98.751% - 100%
+                                        @if($datapegawai->Penghasilan==0.0)
+                                            lebih dari 1 juta
+                                        @elseif($datapegawai->Penghasilan==0.333)
+                                            lebih dari 600 ribu - kurang dari 1 juta
+                                        @elseif($datapegawai->Penghasilan==0.667)
+                                            250 ribu - 600 ribu
+                                        @elseif($datapegawai->Penghasilan==1)
+                                            dibawah 250 ribu
                                         @endif
                                     </td>
                                     <td>
-                                        @if($datapegawai->Lamakerja==0.01)
-                                            0 tahun - 2tahun
-                                        @elseif($datapegawai->Lamakerja==0.25)
-                                            2.1 tahun - 4 tahun
-                                        @elseif($datapegawai->Lamakerja==0.5)
-                                            4.1 tahun - 6.49 tahun
-                                        @elseif($datapegawai->Lamakerja==0.75)
-                                            6.5 tahun - 8.99 tahun
-                                        @elseif($datapegawai->Lamakerja==1)
-                                            >= 9 tahun
+                                        @if($datapegawai->JenisLantai==0.0)
+                                            Granit
+                                        @elseif($datapegawai->JenisLantai==0.25)
+                                            Keramik
+                                        @elseif($datapegawai->JenisLantai==0.5)
+                                            Kayu Murah
+                                        @elseif($datapegawai->JenisLantai==0.75)
+                                            Bambu
+                                        @elseif($datapegawai->JenisLantai==1)
+                                            tanah
                                         @endif
                                     </td>
                                     <td>
-                                        @if($datapegawai->Pendidikan==0.01)
-                                            SMA Sederajat
-                                        @elseif($datapegawai->Pendidikan==0.25)
-                                            D-III
-                                        @elseif($datapegawai->Pendidikan==0.5)
-                                            D-IV
-                                        @elseif($datapegawai->Pendidikan==0.75)
-                                            S1
-                                        @elseif($datapegawai->Pendidikan==1)
-                                            S2
+                                        @if($datapegawai->JumlahAnggota==0.0)
+                                           1
+                                        @elseif($datapegawai->JumlahAnggota==0.25)
+                                           2
+                                        @elseif($datapegawai->JumlahAnggota==0.5)
+                                            3
+                                        @elseif($datapegawai->JumlahAnggota==0.75)
+                                            4
+                                        @elseif($datapegawai->JumlahAnggota==1)
+                                            lebih dari 4
                                         @endif
                                     </td>
                                     <td>
-                                        @if($datapegawai->Keahlian==0.01)
-                                            0 kali mengikuti pelatihan
-                                        @elseif($datapegawai->Keahlian==0.25)
-                                            1 kali mengikuti pelatihan
-                                        @elseif($datapegawai->Keahlian==0.5)
-                                            2 kali mengikuti pelatihan
-                                        @elseif($datapegawai->Keahlian==0.75)
-                                            3 kali mengikuti pelatihan
-                                        @elseif($datapegawai->Keahlian==1)
-                                            lebih dari 3 kali mengikuti pelatihan
+                                        @if($datapegawai->JenisDinding==0.0)
+                                            Tembok Plester
+                                        @elseif($datapegawai->JenisDinding==0.25)
+                                            Tembok
+                                        @elseif($datapegawai->JenisDinding==0.5)
+                                            Kayu Murah
+                                        @elseif($datapegawai->JenisDinding==0.75)
+                                            Rubia
+                                        @elseif($datapegawai->JenisDinding==1)
+                                            bambu
                                         @endif
                                     </td>
 
-                                    <td>@if($datapegawai->StatusPernikahan==0.5)
-                                            belum
-                                        @elseif($datapegawai->StatusPernikahan==1)
-                                            sudah
+                                    <td>@if($datapegawai->StatusPhk==0.5)
+                                            <span class="badge badge-primary"> Tidak TerPHK </span>
+                                        @elseif($datapegawai->StatusPhk==1)
+                                            <span class="badge badge-danger"> PHK </span>
                                         @endif
                                     </td>
                                     <td>
-{{--                                        <a href="#"  class="btn btn-success">--}}
-{{--                                            detail--}}
-{{--                                        </a>--}}
                                         <a href="{{route('update',[$datapegawai->id])}}"  class="btn btn-success">
                                             detail
                                         </a>
+                                        <br>
 {{--                                        <form action="{{route('barangmasuk.destroy',[$a->id])}}" method="POST">--}}
-                                        <form action="#" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button class="btn btn-danger" onclick="return confirm('Yakin menghapus data ini?')" type="submit">hapus</button>
-                                        </form>
+{{--                                            <a href="{{route('delete',[$datapegawai->id])}}"  onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger">--}}
+{{--                                                hapus--}}
+{{--                                            </a>--}}
+{{--                                        </form>--}}
                                     </td>
                                 </tr>
-
                             @endforeach
+                            </tbody>
                         </table>
-                            {{$data->links()}}
-                    </div>
-
-                </div>
             </div>
-{{--            @if($cari1!=null)--}}
-{{--                <div class="section-body">--}}
-{{--                    <div class="card">--}}
-{{--                        <div class="card-header">--}}
-{{--                            <h4>histori barang masuk---{{$hasil}}</h4>--}}
-{{--                        </div>--}}
-{{--                        <div class="card-body p-0">--}}
-{{--                            <div class="table-responsive">--}}
-{{--                                <table class="table table-striped">--}}
-{{--                                    <tr>--}}
-{{--                                        <th>id</th>--}}
-{{--                                        <th>id barang</th>--}}
-{{--                                        <th>nama</th>--}}
-{{--                                        <th>jumlah</th>--}}
-{{--                                        <th>harga beli</th>--}}
-{{--                                        <th>CreatedAt</th>--}}
-{{--                                        <th>Action</th>--}}
-
-{{--                                    </tr>--}}
-{{--                                    @if($cari1 != null)--}}
-{{--                                        @foreach($cari1 as $a)--}}
-
-{{--                                            <tr>--}}
-{{--                                                <td>{{$a->id}}</td>--}}
-{{--                                                <td id="idbarang">{{$a->barang_id}} </td>--}}
-{{--                                                @foreach($namabarang as $b)--}}
-{{--                                                    @if($a->barang_id == $b->id) <td id="namabarang"> {{$b->nama}}  </td>@endif--}}
-{{--                                                @endforeach--}}
-{{--                                                <td id="pemasok">{{$a->pemasok}}</td>--}}
-{{--                                                <td id="hargabeli">{{$a->hargabeli}}</td>--}}
-{{--                                                <td id="created_at">{{$a->created_at}}</td>--}}
-{{--                                                <td>--}}
-{{--                                                    <a href="{{route('barangmasuk.edit',[$a->id])}}"  class="btn btn-success">--}}
-{{--                                                        detail--}}
-{{--                                                    </a>--}}
-{{--                                                    <form action="{{route('barangmasuk.destroy',[$a->id])}}" method="POST">--}}
-{{--                                                        @method('DELETE')--}}
-{{--                                                        @csrf--}}
-{{--                                                        <button class="btn btn-danger" onclick="return confirm('Yakin menghapus data ini?')" type="submit">hapus</button>--}}
-{{--                                                    </form>--}}
-{{--                                                </td>--}}
-{{--                                            </tr>--}}
-
-{{--                                        @endforeach--}}
-{{--                                    @endif--}}
-{{--                                </table>--}}
-
-{{--                            </div>--}}
-{{--                            {{$cari1->links()}}--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            @endif--}}
-
+        </div>
+            </div>
         </div>
     </section>
 @endsection

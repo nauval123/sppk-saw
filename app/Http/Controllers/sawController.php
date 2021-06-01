@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Pegawai;
+use App\Model\Penduduk;
 use App\Model\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,42 +10,12 @@ use Illuminate\Support\Facades\DB;
 class sawController extends Controller
 {
     public function index(){
-        $data= Pegawai::paginate(10);
+        $data= Penduduk::paginate(10);
         return view('admin.matrixnilai',['data'=>$data]);
     }
 
     public function normalisasi(){
-        $tmp = Setting::all();
-        $d = [];
-        foreach($tmp as $settings){
-            $d[$settings->key] = $settings->value;
-        }
-        $kriteria =$d;
-        $c1 = json_decode($kriteria['c1']);
-        $c2 = json_decode($kriteria['c2']);
-        $c3 = json_decode($kriteria['c3']);
-        $c4 = json_decode($kriteria['c4']);
-        $c5 = json_decode($kriteria['c5']);
-        $data = Pegawai::all();
-        $temp_kedisiplinan = [];
-        $temp_lamakerja = [];
-        $temp_pendidikan = [];
-        $temp_keahlian= [];
-        $temp_statuspernikahan = [];
-        foreach ($data as $datapegawai) {
-            $temp_kedisiplinan[] = $datapegawai->Kedisiplinan;
-            $temp_lamakerja[] = $datapegawai->Lamakerja;
-            $temp_pendidikan[] = $datapegawai->Pendidikan;
-            $temp_keahlian[] = $datapegawai->Keahlian;
-            $temp_statuspernikahan[] = $datapegawai->StatusPernikahan;
-        }
-        foreach ($data as $datanormalisasi) {
-            $datanormalisasi->Kedisiplinan = ($c1->is_cost) ? min($temp_kedisiplinan)/$datanormalisasi->Kedisiplinan:$datanormalisasi->Kedisiplinan/max($temp_kedisiplinan);
-            $datanormalisasi->Lamakerja = ($c2->is_cost) ? min($temp_lamakerja)/$datanormalisasi->Lamakerja: $datanormalisasi->Lamakerja/max($temp_lamakerja);
-            $datanormalisasi->Pendidikan= ($c3->is_cost) ? min($temp_pendidikan)/$datanormalisasi->Pendidikan: $datanormalisasi->Pendidikan/max($temp_pendidikan);
-            $datanormalisasi->Keahlian = ($c4->is_cost) ? min($temp_keahlian)/$datanormalisasi->l_Keahlian : $datanormalisasi->l_Keahlian/max($temp_keahlian);
-            $datanormalisasi->StatusPernikahan= ($c5->is_cost) ? min($temp_statuspernikahan)/$datanormalisasi->StatusPernikahan: $datanormalisasi->StatusPernikahan/max($temp_statuspernikahan);
-        }
+        $data=$this->prosesnormalisasi();
         return view('admin.matrixnormalisasi',['data'=>$data]);
     }
 
@@ -61,25 +31,25 @@ class sawController extends Controller
         $c3 = json_decode($kriteria['c3']);
         $c4 = json_decode($kriteria['c4']);
         $c5 = json_decode($kriteria['c5']);
-        $data = Pegawai::all();
-        $temp_kedisiplinan = [];
-        $temp_lamakerja = [];
-        $temp_pendidikan = [];
-        $temp_keahlian= [];
-        $temp_statuspernikahan = [];
-        foreach ($data as $datapegawai) {
-            $temp_kedisiplinan[] = $datapegawai->Kedisiplinan;
-            $temp_lamakerja[] = $datapegawai->Lamakerja;
-            $temp_pendidikan[] = $datapegawai->Pendidikan;
-            $temp_keahlian[] = $datapegawai->Keahlian;
-            $temp_statuspernikahan[] = $datapegawai->StatusPernikahan;
+        $data = Penduduk::all();
+        $temp_penghasilan=[];
+        $temp_jumlahanggota= [];
+        $temp_jenislantai=[];
+        $temp_jenisdinding=[];
+        $temp_statusphk=[];
+        foreach ($data as $datapenduduk) {
+            $temp_penghasilan[] = $datapenduduk->Penghasilan;
+            $temp_jumlahanggota[] = $datapenduduk->JumlahAnggota;
+            $temp_jenisdinding[] = $datapenduduk->JenisDinding;
+            $temp_jenislantai[] = $datapenduduk->JenisLantai;
+            $temp_statusphk[] = $datapenduduk->StatusPhk;
         }
         foreach ($data as $datanormalisasi) {
-            $datanormalisasi->Kedisiplinan = ($c1->is_cost) ? min($temp_kedisiplinan)/$datanormalisasi->Kedisiplinan:$datanormalisasi->Kedisiplinan/max($temp_kedisiplinan);
-            $datanormalisasi->Lamakerja = ($c2->is_cost) ? min($temp_lamakerja)/$datanormalisasi->Lamakerja: $datanormalisasi->Lamakerja/max($temp_lamakerja);
-            $datanormalisasi->Pendidikan= ($c3->is_cost) ? min($temp_pendidikan)/$datanormalisasi->Pendidikan: $datanormalisasi->Pendidikan/max($temp_pendidikan);
-            $datanormalisasi->Keahlian = ($c4->is_cost) ? min($temp_keahlian)/$datanormalisasi->l_Keahlian : $datanormalisasi->l_Keahlian/max($temp_keahlian);
-            $datanormalisasi->StatusPernikahan= ($c5->is_cost) ? min($temp_statuspernikahan)/$datanormalisasi->StatusPernikahan: $datanormalisasi->StatusPernikahan/max($temp_statuspernikahan);
+            $datanormalisasi->Penghasilan = ($c1->is_cost) ? min($temp_penghasilan)/$datanormalisasi->Penghasilan:$datanormalisasi->Penghasilan/max($temp_penghasilan);
+            $datanormalisasi->JenisLantai = ($c2->is_cost) ? min($temp_jenislantai)/$datanormalisasi->JenisLantai: $datanormalisasi->JenisLantai/max($temp_jenislantai);
+            $datanormalisasi->JumlahAnggota= ($c3->is_cost) ? min($temp_jumlahanggota)/$datanormalisasi->JumlahAnggota: $datanormalisasi->JumlahAnggota/max($temp_jumlahanggota);
+            $datanormalisasi->JenisDinding = ($c4->is_cost) ? min($temp_jenisdinding)/$datanormalisasi->JenisDinding : $datanormalisasi->JenisDinding/max($temp_jenisdinding);
+            $datanormalisasi->StatusPhk= ($c5->is_cost) ? min($temp_statusphk)/$datanormalisasi->StatusPhk: $datanormalisasi->StatusPhk/max($temp_statusphk);
         }
         return $data;
     }
@@ -87,14 +57,8 @@ class sawController extends Controller
     function sorting($a, $b) {
         return $a['nilai_preferensi'] < $b['nilai_preferensi'];
     }
-//    function sorting($data) {
-//        var_dump($data);
-////        usort($data,function ($a,$b){
-////            return $a['nilai_preferensi'] < $b['nilai_preferensi'];
-////        });
-//    }
 
-    public function preferensi(){
+    function  prosespreferensi(){
         $tmp = Setting::all();
         $d = [];
         foreach($tmp as $option){
@@ -110,31 +74,37 @@ class sawController extends Controller
         $datapref=[];
         $datanormalisasi = $this->prosesnormalisasi();
         foreach ($datanormalisasi as $datareferensi) {
-            $datareferensi->Kedisiplinan = $datareferensi->Kedisiplinan*$c1->weight;
-            $datareferensi->Lamakerja = $datareferensi->Lamakerja*$c2->weight;
-            $datareferensi->Pendidikan = $datareferensi->Pendidikan*$c3->weight;
-            $datareferensi->Keahlian = $datareferensi->Keahlian*$c4->weight;
-            $datareferensi->StatusPernikahan = $datareferensi->StatusPernikahan*$c5->weight;
-            $datareferensi->nilai_preferensi = $datareferensi->Kedisiplinan+$datareferensi->Lamakerja+$datareferensi->Pendidikan+$datareferensi->Keahlian+$datareferensi->StatusPernikahan;
+            $datareferensi->Penghasilan = $datareferensi->Penghasilan*$c1->weight;
+            $datareferensi->JenisLantai = $datareferensi->JenisLantai*$c2->weight;
+            $datareferensi->JumlahAnggota = $datareferensi->JumlahAnggota*$c3->weight;
+            $datareferensi->JenisDinding = $datareferensi->JenisDinding*$c4->weight;
+            $datareferensi->StatusPhk = $datareferensi->StatusPhk*$c5->weight;
+            $datareferensi->nilai_preferensi = $datareferensi->Penghasilan+$datareferensi->JenisLantai+$datareferensi->JumlahAnggota+$datareferensi->JenisDinding+$datareferensi->StatusPhk;
         }
         foreach($datanormalisasi as $option){
             $temp_data["id"] = $option->id;
-            $temp_data["Jabatan"] = $option->Jabatan;
+            $temp_data["NIK"] = $option->NIK;
             $temp_data["Nama"] = $option->Nama;
-            $temp_data["Kedisiplinan"] = $option->Kedisiplinan;
-            $temp_data["Lamakerja"] = $option->Lamakerja;
-            $temp_data["Pendidikan"] = $option->Pendidikan;
-            $temp_data["Keahlian"] = $option->Keahlian;
-            $temp_data["StatusPernikahan"] = $option->StatusPernikahan;
+            $temp_data["Penghasilan"] = $option->Penghasilan;
+            $temp_data["JenisLantai"] = $option->JenisLantai;
+            $temp_data["JumlahAnggota"] = $option->JumlahAnggota;
+            $temp_data["JenisDinding"] = $option->JenisDinding;
+            $temp_data["StatusPhk"] = $option->StatusPhk;
             $temp_data["nilai_preferensi"] = $option->nilai_preferensi;
             array_push($datapref,$temp_data);
         }
-//        var_dump($datapref);
-        usort($datapref,array('App\Http\Controllers\sawController',"sorting"));
-//        $this->sorting($datapref);
-//        var_dump($temp_data);
-//        var_dump($datapref);
-//        $datasiap=(object)$datapref;
-        return view('admin.matrixreferensi',["data"=>$datapref]);
+        return $datapref;
     }
+
+    public function hasilrekomendasi(){
+        $datapreferensi=$this->prosespreferensi();
+        return view('admin.hasilrekomendasi',["data"=>$datapreferensi]);
+    }
+
+    public function preferensi(){
+        $datapreferensi=$this->prosespreferensi();
+        usort($datapreferensi,array('App\Http\Controllers\sawController',"sorting"));
+        return view('admin.matrixreferensi',["data"=>$datapreferensi]);
+    }
+
 }
