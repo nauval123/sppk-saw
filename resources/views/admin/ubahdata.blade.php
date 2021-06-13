@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <ul>
                             @foreach ($errors->all() as $error)
-                                <div class="alert alert-info alert-has-icon alert-dismissible">
+                                <div class="alert alert-danger alert-has-icon alert-dismissible">
                                     <div class="alert-body">
                                         <button class="close" data-dismiss="alert">
                                             <span>x</span>
@@ -39,7 +39,7 @@
                     <form method="post" action="{{route("edit")}}">
                         @csrf
                         <div class="card-header text-center">
-                            <h2>Data Pegawai Baru</h2>
+                            <h2>Data Penduduk Baru</h2>
                         </div>
                         <div class="card-body">
                             {{--                                <div class="form-group">--}}
@@ -50,9 +50,10 @@
                             {{--                                        @endforeach--}}
                             {{--                                    </select>--}}
                             {{--                                </div>--}}
+                            <input type="hidden" value="{{$datas->id}}" name="id">
                             <div class="form-group">
                                 <label>NIK</label>
-                                <input name="nik" type="text" class="form-control" placeholder="masukkan jabatan" value="{{$datas->Jabatan}}" required>
+                                <input name="nik" type="text" class="form-control" placeholder="masukkan NIK" value="{{$datas->NIK}}" maxlength="16" required>
                             </div>
                             <div class="form-group">
                                 <label>nama</label>
@@ -113,11 +114,11 @@
                                     {{--                                        <option value="3" >2 kali mengikuti pelatihan</option>--}}
                                     {{--                                        <option value="4">3 kali mengikuti pelatihan</option>--}}
                                     {{--                                        <option value="5" >lebih dari 3 kali mengikuti pelatihan</option>--}}
-                                    <option value="0.0" @if($datas->JenisDinding==0.0){{"selected"}}@endif>0</option>
-                                    <option value="0.25" @if($datas->JenisDinding==0.25){{"selected"}}@endif>1</option>
-                                    <option value="0.5" @if($datas->JenisDinding==0.5){{"selected"}}@endif>2</option>
-                                    <option value="0.75" @if($datas->JenisDinding==0.75){{"selected"}}@endif>3</option>
-                                    <option value="1"  @if($datas->JenisDinding==1){{"selected"}}@endif>lebih dari 3</option>
+                                    <option value="0.0" @if($datas->JenisDinding==0.0){{"selected"}}@endif>Tembok Plester</option>
+                                    <option value="0.25" @if($datas->JenisDinding==0.25){{"selected"}}@endif>Tembok</option>
+                                    <option value="0.5" @if($datas->JenisDinding==0.5){{"selected"}}@endif>Kayu Murah</option>
+                                    <option value="0.75" @if($datas->JenisDinding==0.75){{"selected"}}@endif>Rubia</option>
+                                    <option value="1"  @if($datas->JenisDinding==1){{"selected"}}@endif>Bambu</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -132,11 +133,20 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-success">simpan</button>
-                            {{--                                <a href="{{route('operator.index')}}" class="btn btn-warning">cancel</a>--}}
-                            <a href="{{route('delete',[$datas->id])}}"  onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger">
-                                hapus
-                            </a>
+                            @if(auth()->user()->role == "admin")
+                                <button class="btn btn-success">simpan</button>
+                                <a href="{{route('dashboard')}}"   class="btn btn-primary">
+                                    kembali
+                                </a>
+                                {{--                                <a href="{{route('operator.index')}}" class="btn btn-warning">cancel</a>--}}
+                                <a href="{{route('delete',[$datas->id])}}"  onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger">
+                                    hapus
+                                </a>
+                            @else
+                                <a href="{{route('dashboard')}}"   class="btn btn-primary">
+                                    kembali
+                                </a>
+                            @endif
                         </div>
                     </form>
                     @endforeach

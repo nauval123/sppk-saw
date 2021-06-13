@@ -16,6 +16,7 @@ class sawController extends Controller
 
     public function normalisasi(){
         $data=$this->prosesnormalisasi();
+//        dd($data);
         return view('admin.matrixnormalisasi',['data'=>$data]);
     }
 
@@ -106,5 +107,4 @@ class sawController extends Controller
         usort($datapreferensi,array('App\Http\Controllers\sawController',"sorting"));
         return view('admin.matrixreferensi',["data"=>$datapreferensi]);
     }
-
 }

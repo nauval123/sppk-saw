@@ -47,7 +47,7 @@
 {{--                                </div>--}}
                                 <div class="form-group">
                                     <label>NIK</label>
-                                    <input name="nik" type="text" class="form-control" placeholder="Masukkan NIK Kepala Keluarga" value="{{old('nik')}}" max="16" required>
+                                    <input name="nik" type="text" class="form-control" placeholder="Masukkan NIK Kepala Keluarga" value="{{old('nik')}}" maxlength="16" required>
                                 </div>
                                 <div class="form-group">
                                     <label>nama</label>

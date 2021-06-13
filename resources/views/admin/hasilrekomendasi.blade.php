@@ -34,7 +34,7 @@
                            cellspacing="0">
                         <thead>
                             <tr>
-                                <th>id </th>
+{{--                                <th>id </th>--}}
                                 <th>NIK</th>
                                 <th>Nama KK</th>
                                 <th>Penghasilan</th>
@@ -48,7 +48,7 @@
                         <tbody>
                             @foreach($data as $datapegawai)
                                 <tr>
-                                    <td>{{$datapegawai['id']}}</td>
+{{--                                    <td>{{$datapegawai['id']}}</td>--}}
 {{--                                    <td>{{number_format($num, 2, '.', '')}}</td>--}}
                                     <td>{{$datapegawai['NIK']}}</td>
                                     <td>{{$datapegawai['Nama']}}</td>

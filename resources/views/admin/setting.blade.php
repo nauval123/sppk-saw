@@ -63,7 +63,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Cost/Benefit</label>
-                                            <select name="cost_c1" id="" class="form-control">
+                                            <select name="cost_c1" id="" class="form-control" disabled>
                                                 <option value="0" @if (!$c11->is_cost)
                                                 selected
                                                     @endif>Benefit</option>
@@ -101,7 +101,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Cost/Benefit</label>
-                                            <select name="cost_c2" id="" class="form-control">
+                                            <select name="cost_c2" id="" class="form-control" disabled>
                                                 <option value="0" @if (!$c22->is_cost)
                                                 selected
                                                     @endif>Benefit</option>
@@ -139,7 +139,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Cost/Benefit</label>
-                                            <select name="cost_c3" id="" class="form-control">
+                                            <select name="cost_c3" id="" class="form-control" disabled>
                                                 <option value="0" @if (!$c33->is_cost)
                                                 selected
                                                     @endif>Benefit</option>
@@ -177,7 +177,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Cost/Benefit</label>
-                                            <select name="cost_c4" id="" class="form-control">
+                                            <select name="cost_c4" id="" class="form-control" disabled>
                                                 <option value="0" @if (!$c44->is_cost)
                                                 selected
                                                     @endif>Benefit</option>
@@ -215,7 +215,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Cost/Benefit</label>
-                                            <select name="cost_c5" id="" class="form-control">
+                                            <select name="cost_c5" id="" class="form-control" >
                                                 <option value="0" @if (!$c55->is_cost)
                                                 selected
                                                     @endif>Benefit</option>

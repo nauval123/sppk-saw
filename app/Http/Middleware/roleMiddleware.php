@@ -13,11 +13,11 @@ class roleMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next,$roleName)
+    public function handle($request, Closure $next,...$roleName)
     {
-        if(!$request->user()->hasRole($roleName)){
-            return abort(403);
-        }
+      if(in_array(auth()->user()->role,$roleName)){
         return $next($request);
+      }
+      return redirect()->route("welcome");
     }
 }

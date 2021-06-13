@@ -1,6 +1,6 @@
 @extends('admin/layout')
 @section('kontenoperator')
-
+{{--@php(dd($data))--}}
     <section class="section">
         <div class="section-header">
             <div class="container-fluid">
@@ -26,7 +26,7 @@
                     <div class="card-box tilebox-one">
                         <i class="fi-tag float-right"></i>
                         <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>
-                        <h4 class="mb-3"><span data-plugin="counterup">{{$jumlahpenduduk}}</span></h4>
+                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>
                         <span class="badge badge-primary"></span>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="card-box tilebox-one">
                         <i class="fi-box float-right"></i>
                         <h6 class="text-muted text-uppercase mb-3">Jumlah Orang Ter-PHK</h6>
-                        <h4 class="mb-3" data-plugin="counterup">{{$phk}}</h4>
+                        <h4 class="mb-3" data-plugin="counterup">10</h4>
                     </div>
                 </div>
 
@@ -43,18 +43,43 @@
                     <div class="card-box tilebox-one">
                         <i class="fi-layers float-right"></i>
                         <h6 class="text-muted text-uppercase mb-3">Penghasilan dibawah 600 ribu</h6>
-                        <h4 class="mb-3"><span data-plugin="counterup">{{$upah}}</span></h4>
+                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>
                     </div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-header">
-                    @if(auth()->user()->role == "admin")
-                    <h4>
-                        <a href="{{route('create')}}" class="btn btn-primary">
-                            +  data baru
-                        </a>
-                    </h4>
+                    @if(auth()->user()->role == "admin" or auth()->user()->role == "sukarelawan")
+                        <h4>
+                            @if(auth()->user()->role == "admin")
+                                <a href="{{route('periode-tambah')}}" class="btn btn-primary">
+                                    +  periode baru
+                                </a>
+                            @endif
+                        </h4>
+                        <h4>
+                            @if(auth()->user()->role == "sukarelawan")
+                                <a href="{{route('tambah-penerima',[$dataidperiode])}}" class="btn btn-primary">
+                                    +  data baru
+                                </a>
+                            @endif
+                        </h4>
+                        <form class="card-header-form" method="get" action="{{route("periode-id")}}">
+                            @csrf
+                            <div class="input-group">
+                                <select name="periode" class="custom-select" id="inputGroupSelect04">
+                                    @foreach($dataperiode as $periode)
+                                        <option value="{{$periode->id}}"><a href="{{route('periode-id',[$periode->id])}}" class="btn btn-info">
+                                                {{'Gelombang '.$periode->id}}
+                                            </a></option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <button class="btn-info">cari</button>
+
+                                </div>
+                            </div>
+                        </form>
                     @endif
                 </div>
                 <div class="card-body">
@@ -71,14 +96,13 @@
                                 <th>Jumlah Anggota Keluarga</th>
                                 <th>Jenis Dinding Rumah</th>
                                 <th>Status PHK</th>
+                                <th>Status Diterima</th>
                                 <th>aksi</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($data as $datapegawai)
-
                                 <tr>
-
                                     <td>{{$datapegawai->id}}</td>
                                     <td>{{$datapegawai->NIK}}</td>
                                     <td>{{$datapegawai->Nama}}</td>
@@ -109,9 +133,9 @@
                                     </td>
                                     <td>
                                         @if($datapegawai->JumlahAnggota==0.0)
-                                           1
+                                            1
                                         @elseif($datapegawai->JumlahAnggota==0.25)
-                                           2
+                                            2
                                         @elseif($datapegawai->JumlahAnggota==0.5)
                                             3
                                         @elseif($datapegawai->JumlahAnggota==0.75)
@@ -134,17 +158,34 @@
                                         @endif
                                     </td>
 
-                                    <td>@if($datapegawai->StatusPhk==0.5)
+                                    <td>
+                                        @if($datapegawai->StatusPhk==0.5)
                                             <span class="badge badge-primary"> Tidak TerPHK </span>
                                         @elseif($datapegawai->StatusPhk==1)
                                             <span class="badge badge-danger"> PHK </span>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{route('update',[$datapegawai->id])}}"  class="btn btn-success">
-                                            detail
-                                        </a>
-                                        <br>
+                                        @foreach($datapegawai->periode as $pivots)
+{{--                                            @php(dd($datapegawai->periode))--}}
+                                            @if($pivots->pivot->status==1)
+                                                <span class="badge badge-primary"> Terkirim</span>
+                                            @elseif($pivots->pivot->status==0)
+                                                <span class="badge badge-danger"> Belum Terkirim </span>
+                                            @endif
+
+
+                                    </td>
+                                    <td>
+                                            <a href="{{route('update-penerima',["periode"=>$pivots->pivot->periode_id,'id'=>$pivots->pivot->penduduk_id])}}"  onclick="return confirm('Yakin mengubah status?')" class="btn btn-info">
+                                                detail
+                                            </a>
+
+                                        @endforeach
+{{--                                        <a href="#"  class="btn btn-success">--}}
+{{--                                            detail--}}
+{{--                                        </a>--}}
+{{--                                        <br>--}}
 {{--                                        <form action="{{route('barangmasuk.destroy',[$a->id])}}" method="POST">--}}
 {{--                                            <a href="{{route('delete',[$datapegawai->id])}}"  onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger">--}}
 {{--                                                hapus--}}
@@ -155,8 +196,8 @@
                             @endforeach
                             </tbody>
                         </table>
-            </div>
-        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

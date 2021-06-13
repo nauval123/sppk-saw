@@ -43,8 +43,10 @@
 {{--    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">--}}
 {{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/b-1.7.0/cr-1.5.3/date-1.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.css">--}}
     <!-- Template CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+{{--    {{asset('assets/css/style.css')}}--}}
+{{--    {{asset('assets/css/components.css')}}--}}
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
 </head>
 
 <body>
@@ -71,10 +73,23 @@
                 </div>
                 <ul class="sidebar-menu">
                     <li class="menu-header">HomePage</li>
-                    <li class="active">
+                    @if(auth()->user()->role == "superadmin")
+                        <li class="nav-item dropdown">
+                            <a href="{{route("data-akun")}}" class="nav-link"><i class="fas fa-address-card"></i> <span>Data Akun</span></a>
+                        </li>
+                    @endif
+                    <li class="nav-item dropdown">
+                        <a href="{{route("penerima")}}" class="nav-link"><i class="fas fa-calendar"></i> <span>Histori Penerima</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('hasilrekomendasi')}}" class="nav-link"><i class="fas fa-database"></i> <span>hasil rekomendasi</span></a>
+                    </li>
+                    @if(auth()->user()->role == "admin" or auth()->user()->role == "superadmin")
+
+                    <li class="nav-item dropdown">
                         <a href="{{route('dashboard')}}" class="nav-link"><i class="fas fa-columns"></i> <span>Data Kependudukan</span></a>
                     </li>
-                    <li class="active nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a href="#" class="nav-link has-dropdown"><i class="fas fa-book"></i> <span>SAW</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" href="{{route("matrixnilai")}}">Matrix Nilai</a></li>
@@ -85,12 +100,10 @@
 {{--                    <li class="active">--}}
 {{--                        <a href="{{route('dashboard')}}" class="nav-link"><i class="fas fa-book"></i> <span>SAW</span></a>--}}
 {{--                    </li>--}}
-                    <li class="active">
+                    <li class="nav-item">
                         <a href="{{route('setting')}}" class="nav-link"><i class="fas fa-cog"></i> <span>kriteria</span></a>
                     </li>
-                    <li class="active">
-                        <a href="{{route('hasilrekomendasi')}}" class="nav-link"><i class="fas fa-database"></i> <span>hasil rekomendasi</span></a>
-                    </li>
+                    @endif
                 </ul>
 
                 <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
