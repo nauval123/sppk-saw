@@ -71,8 +71,8 @@ class sawController extends Controller
         $c3 = json_decode($tmpdata['c3']);
         $c4 = json_decode($tmpdata['c4']);
         $c5 = json_decode($tmpdata['c5']);
-        $temp_data=[];
-        $datapref=[];
+//        $temp_data=[];
+//        $datapref=[];
         $datanormalisasi = $this->prosesnormalisasi();
         foreach ($datanormalisasi as $datareferensi) {
             $datareferensi->Penghasilan = $datareferensi->Penghasilan*$c1->weight;
@@ -82,19 +82,20 @@ class sawController extends Controller
             $datareferensi->StatusPhk = $datareferensi->StatusPhk*$c5->weight;
             $datareferensi->nilai_preferensi = $datareferensi->Penghasilan+$datareferensi->JenisLantai+$datareferensi->JumlahAnggota+$datareferensi->JenisDinding+$datareferensi->StatusPhk;
         }
-        foreach($datanormalisasi as $option){
-            $temp_data["id"] = $option->id;
-            $temp_data["NIK"] = $option->NIK;
-            $temp_data["Nama"] = $option->Nama;
-            $temp_data["Penghasilan"] = $option->Penghasilan;
-            $temp_data["JenisLantai"] = $option->JenisLantai;
-            $temp_data["JumlahAnggota"] = $option->JumlahAnggota;
-            $temp_data["JenisDinding"] = $option->JenisDinding;
-            $temp_data["StatusPhk"] = $option->StatusPhk;
-            $temp_data["nilai_preferensi"] = $option->nilai_preferensi;
-            array_push($datapref,$temp_data);
-        }
-        return $datapref;
+//        foreach($datanormalisasi as $option){
+//            $temp_data["id"] = $option->id;
+//            $temp_data["NIK"] = $option->NIK;
+//            $temp_data["Nama"] = $option->Nama;
+//            $temp_data["Penghasilan"] = $option->Penghasilan;
+//            $temp_data["JenisLantai"] = $option->JenisLantai;
+//            $temp_data["JumlahAnggota"] = $option->JumlahAnggota;
+//            $temp_data["JenisDinding"] = $option->JenisDinding;
+//            $temp_data["StatusPhk"] = $option->StatusPhk;
+//            $temp_data["nilai_preferensi"] = $option->nilai_preferensi;
+//            array_push($datapref,$temp_data);
+//        }
+//        $datanormalisasi;
+        return $datanormalisasi->sortByDesc('nilai_preferensi');
     }
 
     public function hasilrekomendasi(){
@@ -104,7 +105,7 @@ class sawController extends Controller
 
     public function preferensi(){
         $datapreferensi=$this->prosespreferensi();
-        usort($datapreferensi,array('App\Http\Controllers\sawController',"sorting"));
+//        usort($datapreferensi,array('App\Http\Controllers\sawController',"sorting"));
         return view('admin.matrixreferensi',["data"=>$datapreferensi]);
     }
 }

@@ -109,6 +109,9 @@ class pendudukController extends Controller
         try {
             $penduduk=Penduduk::where('id',$id);
             $penduduk->delete();
+            $penerima=Penerima::where('penduduk_id',$id);
+            $penerima->delete();
+//            dd($penerima);
             return redirect()->route('dashboard')->with('pesan','data berhasil terhapus');
         }catch (Exception  $e){
             return redirect()->withErrors(['Peringatan', 'gagal di hapus!']);

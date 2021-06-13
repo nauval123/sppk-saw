@@ -22,20 +22,20 @@
         @endif
         <div class="section-body">
             <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-                    <div class="card-box tilebox-one">
-                        <i class="fi-tag float-right"></i>
-                        <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>
-                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>
-                        <span class="badge badge-primary"></span>
-                    </div>
-                </div>
+{{--                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">--}}
+{{--                    <div class="card-box tilebox-one">--}}
+{{--                        <i class="fi-tag float-right"></i>--}}
+{{--                        <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>--}}
+{{--                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>--}}
+{{--                        <span class="badge badge-primary"></span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div class="card-box tilebox-one">
                         <i class="fi-box float-right"></i>
                         <h6 class="text-muted text-uppercase mb-3">Jumlah Orang Ter-PHK</h6>
-                        <h4 class="mb-3" data-plugin="counterup">10</h4>
+                        <h4 class="mb-3" data-plugin="counterup">{{$phk}}</h4>
                     </div>
                 </div>
 
@@ -43,7 +43,23 @@
                     <div class="card-box tilebox-one">
                         <i class="fi-layers float-right"></i>
                         <h6 class="text-muted text-uppercase mb-3">Penghasilan dibawah 600 ribu</h6>
-                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>
+                        <h4 class="mb-3"><span data-plugin="counterup">{{$dibawah}}</span></h4>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="card-box tilebox-one">
+                        <i class="fi-layers float-right"></i>
+                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang diterima periode -{{$dataidperiode}}-</h6>
+                        <h4 class="mb-3"><span data-plugin="counterup">{{$diterima}}</span></h4>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="card-box tilebox-one">
+                        <i class="fi-layers float-right"></i>
+                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang belum diterima periode -{{$dataidperiode}}-</h6>
+                        <h4 class="mb-3"><span data-plugin="counterup">{{$belumditerima}}</span></h4>
                     </div>
                 </div>
             </div>
@@ -65,13 +81,14 @@
                             @endif
                         </h4>
                         <form class="card-header-form" method="get" action="{{route("periode-id")}}">
-                            @csrf
+{{--                            @csrf--}}
                             <div class="input-group">
                                 <select name="periode" class="custom-select" id="inputGroupSelect04">
                                     @foreach($dataperiode as $periode)
-                                        <option value="{{$periode->id}}"><a href="{{route('periode-id',[$periode->id])}}" class="btn btn-info">
+                                        <option value="{{$periode->id}}"  @if($dataidperiode == $periode->id) {{"selected"}}@endif><a href="{{route('periode-id',[$periode->id])}}" class="btn btn-info">
                                                 {{'Gelombang '.$periode->id}}
-                                            </a></option>
+                                            </a>
+                                        </option>
                                     @endforeach
                                 </select>
                                 <div class="input-group-append">
@@ -168,20 +185,22 @@
                                     <td>
                                         @foreach($datapegawai->periode as $pivots)
 {{--                                            @php(dd($datapegawai->periode))--}}
-                                            @if($pivots->pivot->status==1)
-                                                <span class="badge badge-primary"> Terkirim</span>
-                                            @elseif($pivots->pivot->status==0)
-                                                <span class="badge badge-danger"> Belum Terkirim </span>
+                                            @if($pivots->id == $dataidperiode)
+                                                @if($pivots->pivot->status == 1)
+                                                    <span class="badge badge-primary"> Terkirim </span>
+                                                @elseif($pivots->pivot->status == 0)
+                                                    <span class="badge badge-danger"> Belum Terkirim </span>
+                                                @endif
                                             @endif
-
-
+                                        @endforeach
                                     </td>
+{{--                                    <td></td>--}}
                                     <td>
                                             <a href="{{route('update-penerima',["periode"=>$pivots->pivot->periode_id,'id'=>$pivots->pivot->penduduk_id])}}"  onclick="return confirm('Yakin mengubah status?')" class="btn btn-info">
                                                 detail
                                             </a>
 
-                                        @endforeach
+
 {{--                                        <a href="#"  class="btn btn-success">--}}
 {{--                                            detail--}}
 {{--                                        </a>--}}

@@ -11,9 +11,9 @@ class Penduduk extends Model
 
     protected $fillable=['NIK',"Nama","JenisLantai","Penghasilan","JumlahAnggota","JenisDinding","StatusPhk"];
 
-//    public function penerima(){
-//        return $this->hasMany(Penerima::class,'idPenduduk','id');
-//    }
+    public function penerima(){
+        return $this->hasMany(Penerima::class,'penduduk_id','id');
+    }
 
     public function periode(){
         return $this->belongsToMany('App\Model\Periode')->withPivot("status");

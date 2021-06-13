@@ -10,9 +10,9 @@ class Periode extends Model
 
 //    protected $fillable=["id"];
 
-//    public function penerima(){
-//        return $this->hasMany(Penerima::class,'idPeriode','id');
-//    }
+    public function penerima(){
+        return $this->hasMany(Penerima::class,'idPeriode','id');
+    }
 
     public function penduduk()
     {

@@ -13,6 +13,15 @@ class calonpenerimaController extends Controller
 {
     public function index (){
         $periode=Periode::all();
+        $dibawah=Penduduk::where('Penghasilan','<=','0.5')->with("penerima")->whereHas('penerima', function ($query)  {
+            return $query->where('periode_id', 1);})->count();
+        $phk=Penduduk::where('StatusPhk','1')->with("penerima")->whereHas('penerima', function ($query)  {
+            return $query->where('periode_id', 1);})->count();
+        $diterima=Penduduk::with("penerima")->whereHas('penerima', function ($query)  {
+            return $query->where([['status','=','1'],['periode_id','=',1]]);})->count();
+        $belumditerima=Penduduk::with("penerima")->whereHas('penerima', function ($query)  {
+            return $query->where([['status','=','0'],['periode_id','=',1]]);})->count();
+//        dd($dibawah,$phk,$diterima,$belumditerima);
         $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query)  {
             return $query->where('periode_id', 1);})->get();
 //        $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query) use ($id) {
@@ -21,23 +30,41 @@ class calonpenerimaController extends Controller
 //        $penduduk= Penerima::whereHas("penduduk")->whereHas("periode")->get();
 //        $penduduk=Penerima::where("idPeriode",1)->with(['penduduk'])->get();
 //        dd($pivots);
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>1]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>1,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
     }
 
     public function periode(Request $request){
         $periode=Periode::all();
+        $dibawah=Penduduk::where('Penghasilan','<=','0.5')->with("penerima")->whereHas('penerima', function ($query) use ($request) {
+            return $query->where('periode_id', $request->periode);})->count();
+        $phk=Penduduk::where('StatusPhk','1')->with("penerima")->whereHas('penerima', function ($query) use ($request) {
+            return $query->where('periode_id', $request->periode);})->count();
+        $diterima=Penduduk::with("penerima")->whereHas('penerima', function ($query) use ($request) {
+            return $query->where([['status','=','1'],['periode_id','=',$request->periode]]);})->count();
+        $belumditerima=Penduduk::with("penerima")->whereHas('penerima', function ($query) use ($request) {
+            return $query->where([['status','=','0'],['periode_id','=',$request->periode]]);})->count();
+//        dd($dibawah,$phk,$diterima,$belumditerima);
         $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query) use ($request)  {
             return $query->where('periode_id', $request->periode);})->get();
 
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$request->periode]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$request->periode,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
     }
 
     public function periode2($id){
         $periode=Periode::all();
+        $dibawah=Penduduk::where('Penghasilan','<=','0.5')->with("penerima")->whereHas('penerima', function ($query) use ($id) {
+            return $query->where('periode_id', $id);})->count();
+        $phk=Penduduk::where('StatusPhk','1')->with("penerima")->whereHas('penerima', function ($query) use ($id) {
+            return $query->where('periode_id', $id);})->count();
+        $diterima=Penduduk::with("penerima")->whereHas('penerima', function ($query) use ($id) {
+            return $query->where([['status','=','1'],['periode_id','=',$id]]);})->count();
+        $belumditerima=Penduduk::with("penerima")->whereHas('penerima', function ($query) use ($id) {
+            return $query->where([['status','=','0'],['periode_id','=',$id]]);})->count();
+//        dd($dibawah,$phk,$diterima,$belumditerima);
         $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query) use ($id)  {
             return $query->where('periode_id', $id);})->get();
 
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$id]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$id,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
     }
 
     public function create($id){

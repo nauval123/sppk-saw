@@ -139,7 +139,7 @@
                                     kembali
                                 </a>
                                 {{--                                <a href="{{route('operator.index')}}" class="btn btn-warning">cancel</a>--}}
-                                <a href="{{route('delete',[$datas->id])}}"  onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger">
+                                <a href="{{route('delete',[$datas->id])}}"  onclick="return confirm('Yakin menghapus data ini? data akan terhapus seluruhnya yang bersangkutan dengan penduduk tersebut !')" class="btn btn-danger">
                                     hapus
                                 </a>
                             @else

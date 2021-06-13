@@ -59,11 +59,11 @@
                         <div class="form-group">
                             <label>Status Diterima</label>
                             <select name="status" id="email" class="form-control" required>
-
                                     @foreach($data->periode as $pivots)
-                                        <option value="0" @if($pivots->pivot->status == 0){{"selected"}}@endif>belum</option>
-                                        <option value="1" @if($pivots->pivot->status == 1){{"selected"}}@endif >sudah</option>
-
+                                        @if($pivots->id == $idperiode)
+                                            <option value="0" @if($pivots->pivot->status == 0){{"selected"}}@endif>belum</option>
+                                            <option value="1" @if($pivots->pivot->status == 1){{"selected"}}@endif >sudah</option>
+                                        @endif
                                     @endforeach
 
                             </select>
