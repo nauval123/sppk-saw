@@ -74,11 +74,11 @@
                             @endif
                         </h4>
                         <h4>
-                            @if(auth()->user()->role == "sukarelawan")
-                                <a href="{{route('tambah-penerima',[$dataidperiode])}}" class="btn btn-primary">
-                                    +  data baru
-                                </a>
-                            @endif
+{{--                            @if(auth()->user()->role == "sukarelawan")--}}
+{{--                                <a href="{{route('tambah-penerima',[$dataidperiode])}}" class="btn btn-primary">--}}
+{{--                                    +  data baru--}}
+{{--                                </a>--}}
+{{--                            @endif--}}
                         </h4>
                         <form class="card-header-form" method="get" action="{{route("periode-id")}}">
 {{--                            @csrf--}}
