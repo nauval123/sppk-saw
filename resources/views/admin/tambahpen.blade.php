@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 @endif
-                <form method="post" action="{{route("tambah-data-penerima")}}">
+                <form method="post" action="{{route("tambah-data-penerima")}}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-header text-center">
                         <h2>Data Penerima Baru</h2>
@@ -56,10 +56,17 @@
                                 <option value="1" >sudah</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label >Upload Foto Bukti Penerima </label>
+                            <input type="file" class="form-control" name="bukti">
+                        </div>
                     </div>
                     <div class="card-footer text-right">
                         <button class="btn btn-success">simpan</button>
                         {{--                                <a href="{{route('operator.index')}}" class="btn btn-warning">cancel</a>--}}
+                        <a href="{{route("penerima")}}"   class="btn btn-primary">
+                            kembali
+                        </a>
                     </div>
                 </form>
             </div>

@@ -27,16 +27,15 @@
                         <h1>Hasil Rekomendasi</h1>
                     </div>
                 </div>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="dataTable" width="100%"
-                           cellspacing="0">
-                        <thead>
+                <div class="card-body ">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="dataTable" width="100%"
+                               cellspacing="0">
+                            <thead>
                             <tr>
-{{--                                <th>id </th>--}}
-                                <th>NIK</th>
-                                <th>Nama KK</th>
+                                <th>Ranking</th>
+{{--                                <th>NIK</th>--}}
+                                <th>KK</th>
                                 <th>Penghasilan</th>
                                 <th>Jenis Lantai</th>
                                 <th>Jumlah Anggota Keluarga</th>
@@ -44,32 +43,36 @@
                                 <th>Status PHK</th>
                                 <th>Nilai total</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
+
                             @foreach($data as $datapegawai)
                                 <tr>
-{{--                                    <td>{{$datapegawai['id']}}</td>--}}
-{{--                                    <td>{{number_format($num, 2, '.', '')}}</td>--}}
-                                    <td>{{$datapegawai['NIK']}}</td>
+                                    <td>{{$datapegawai['ranking']}}</td>
+                                    {{--                                    <td>{{number_format($num, 2, '.', '')}}</td>--}}
+{{--                                    <td>{{$datapegawai['NIK']}}</td>--}}
                                     <td>{{$datapegawai['Nama']}}</td>
                                     <td>{{number_format($datapegawai['Penghasilan'], 2, '.', '')}}</td>
-{{--                                    <td>{{$datapegawai['Penghasilan']}}</td>--}}
+                                    {{--                                    <td>{{$datapegawai['Penghasilan']}}</td>--}}
                                     <td>{{number_format($datapegawai['JenisLantai'], 2, '.', '')}}</td>
-{{--                                    <td>{{$datapegawai['JenisLantai']}}</td>--}}
+                                    {{--                                    <td>{{$datapegawai['JenisLantai']}}</td>--}}
                                     <td>{{number_format($datapegawai['JumlahAnggota'], 2, '.', '')}}</td>
-{{--                                    <td>{{$datapegawai['JumlahAnggota']}}</td>--}}
+                                    {{--                                    <td>{{$datapegawai['JumlahAnggota']}}</td>--}}
                                     <td>{{number_format($datapegawai['JenisDinding'], 2, '.', '')}}</td>
-{{--                                    <td>{{$datapegawai['JenisDinding']}}</td>--}}
+                                    {{--                                    <td>{{$datapegawai['JenisDinding']}}</td>--}}
                                     <td>{{number_format($datapegawai['StatusPhk'], 2, '.', '')}}</td>
-{{--                                    <td>{{$datapegawai['StatusPhk']}}</td>--}}
+                                    {{--                                    <td>{{$datapegawai['StatusPhk']}}</td>--}}
                                     <td>{{number_format($datapegawai['nilai_preferensi'], 2, '.', '')}}</td>
-{{--                                    <td>{{$datapegawai['nilai_preferensi']}}</td>--}}
+                                    {{--                                    <td>{{$datapegawai['nilai_preferensi']}}</td>--}}
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
             </div>
+
         </div>
     </section>
 @endsection

@@ -16,7 +16,7 @@ class Periode extends Model
 
     public function penduduk()
     {
-        return $this->belongsToMany("App\Model\Penduduk")->withPivot("status","penduduk_id","periode_id","id");
+        return $this->belongsToMany("App\Model\Penduduk")->withPivot("status","penduduk_id","periode_id","id","bukti");
     }
 
 

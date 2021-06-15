@@ -65,7 +65,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    @if(auth()->user()->role == "admin" or auth()->user()->role == "sukarelawan")
+                    @if(auth()->user()->role == "admin" or auth()->user()->role == "sukarelawan" or auth()->user()->role == "superadmin")
                         <h4>
                             @if(auth()->user()->role == "admin")
                                 <a href="{{route('periode-tambah')}}" class="btn btn-primary">
@@ -196,10 +196,11 @@
                                     </td>
 {{--                                    <td></td>--}}
                                     <td>
-                                            <a href="{{route('update-penerima',["periode"=>$pivots->pivot->periode_id,'id'=>$pivots->pivot->penduduk_id])}}"  onclick="return confirm('Yakin mengubah status?')" class="btn btn-info">
+{{--                                        @if($pivots->pivot->periode_id == $dataidperiode)--}}
+                                            <a href="{{route('update-penerima',["periode"=>$dataidperiode,'id'=>$pivots->pivot->penduduk_id])}}"  onclick="return confirm('Yakin mengubah status?')" class="btn btn-info">
                                                 detail
                                             </a>
-
+{{--                                        @endif--}}
 
 {{--                                        <a href="#"  class="btn btn-success">--}}
 {{--                                            detail--}}

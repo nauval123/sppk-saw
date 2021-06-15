@@ -41,7 +41,7 @@
                         <input type="hidden" value="{{$dataakun->id}}" name="id">
                         <div class="form-group">
                             <label>Nama</label>
-                            <input name="nama" type="text"  class="form-control" placeholder="Masukkan Nama Kepala Keluarga" value="{{$dataakun->name}}" required>
+                            <input name="nama" type="text"  class="form-control" placeholder="Masukkan Nama " value="{{$dataakun->name}}" required>
                         </div>
                         <div class="form-group">
                             <label>Password Baru</label>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="email" type="text" class="form-control" placeholder="Masukkan NIK Kepala Keluarga" value="{{$dataakun->email}}" maxlength="16" required>
+                            <input name="email" type="text" class="form-control" placeholder="Masukkan Email" value="{{$dataakun->email}}"  required>
                         </div>
                         <div class="form-group">
                             <label>Role</label>

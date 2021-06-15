@@ -33,7 +33,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <tr>
-                            <th>id </th>
+                            <th>Ranking</th>
                             <th>NIK</th>
                             <th>Nama KK</th>
                             <th>Penghasilan</th>
@@ -45,7 +45,7 @@
                         </tr>
                         @foreach($data as $datapegawai)
                             <tr>
-                                <td>{{$datapegawai['id']}}</td>
+                                <td>{{$datapegawai['ranking']}}</td>
                                 <td>{{$datapegawai['NIK']}}</td>
                                 <td>{{$datapegawai['Nama']}}</td>
                                 <td>{{$datapegawai['Penghasilan']}}</td>

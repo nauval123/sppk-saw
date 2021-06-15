@@ -8,6 +8,8 @@ use App\Model\Penerima;
 use App\Model\Periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class calonpenerimaController extends Controller
 {
@@ -76,15 +78,22 @@ class calonpenerimaController extends Controller
     public function add(Request $request){
 //        dd($request);
 //      $cek=Penerima::where("penduduk_id",$request->identitas)->where("periode_id",$request->idperiode);
-        $cek=Penerima::where([['penduduk_id','=',$request->identitas],['periode_id','=',$request->idperiode]]);
-//        dd($cek);
+        $cek=Penerima::where([['penduduk_id','=',$request->identitas],['periode_id','=',$request->idperiode]])->get();
+//        dd(isset($cek),$cek);
 
         if(isset($cek)){
           try {
+              $request->validate([
+                  'bukti' => 'file|between:0,2048|mimes:png,jpg,jpeg',
+              ]);
+              $fileType = $request->file('bukti')->extension();
+              $name = Str::random(4) ."-".$request->identitas.$request->idperiode.'.' . $fileType;
+              Storage::putFileAs('public/bukti', $request->file('bukti'), $name);
               $pendudukperiode = new Penerima();
               $pendudukperiode->penduduk_id=$request->identitas;
               $pendudukperiode->periode_id=$request->idperiode;
               $pendudukperiode->status=$request->status;
+              $pendudukperiode->bukti=$name;
               $pendudukperiode->save();
               return redirect()->route('periode-ke',[$request->idperiode])->with('pesan','data penerima berhasil ditambahkan');
           }
@@ -103,28 +112,35 @@ class calonpenerimaController extends Controller
         $penduduk=Penduduk::where('id',$id)->with("periode")->whereHas('periode', function ($query) use ($periode)  {
             return $query->where('periode_id', $periode);})->get();
 //        dd($penduduk);
-        return view('admin.editpenerima',["datapenduduk"=>$penduduk,"idperiode"=>$periode]);
+        $bukti=Penerima::where([['penduduk_id','=',$id],['periode_id','=',$periode]])->get("bukti");
+        return view('admin.editpenerima',["datapenduduk"=>$penduduk,"idperiode"=>$periode,"bukti"=>$bukti]);
     }
 
     public function update(Request $request){
-        try {
-//            dd($request);
+//        dd($request);
+        $request->validate([
+            'bukti' => 'file|between:0,2048|mimes:png,jpg,jpeg',
+        ]);
+//        try {
+            if ($request->has("bukti")){
+                $fileType = $request->file('bukti')->extension();
+                $name = Str::random(4) ."-".$request->identitas.$request->idperiode.'.' . $fileType;
+                Storage::putFileAs('public/bukti', $request->file('bukti'), $name);
+                $penerima= Penerima::where([['penduduk_id','=',$request->idpenduduk],['periode_id','=',$request->idperiode]])->first();
+                $penerima->status = $request->status;
+                $penerima->bukti = $name;
+                $penerima->save();
+                return redirect()->route('periode-ke',[$request->idperiode])->with('pesan','data penerima berhasil diubah');
+            }
             $penerima= Penerima::where([['penduduk_id','=',$request->idpenduduk],['periode_id','=',$request->idperiode]])->first();
-//            dd($id);
-
-//        dd($penerima);
             $penerima->status = $request->status;
             $penerima->save();
             return redirect()->route('periode-ke',[$request->idperiode])->with('pesan','data penerima berhasil diubah');
-        }
-        catch (\Exception $e){
-            return redirect()->back()->withErrors(['Peringatan', 'Gagal ditambahkan,error!']);
-        }
-//        dd($request);
-//        $penerima=Penerima::where('penduduk_id',$request->idpenduduk)->where('periode_id',$request->idperiode)->get();
-////        dd($penerima);
-//        $penerima->status=$request->status;
-//        $penerima->save();
+//        }
+//        catch (\Exception $e){
+//            dd($e);
+//            return redirect()->back()->withErrors(['Peringatan', 'Gagal ditambahkan,error!']);
+//        }
     }
 
     public function tambahperiode(){

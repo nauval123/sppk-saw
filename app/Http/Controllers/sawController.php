@@ -74,6 +74,7 @@ class sawController extends Controller
 //        $temp_data=[];
 //        $datapref=[];
         $datanormalisasi = $this->prosesnormalisasi();
+
         foreach ($datanormalisasi as $datareferensi) {
             $datareferensi->Penghasilan = $datareferensi->Penghasilan*$c1->weight;
             $datareferensi->JenisLantai = $datareferensi->JenisLantai*$c2->weight;
@@ -95,7 +96,13 @@ class sawController extends Controller
 //            array_push($datapref,$temp_data);
 //        }
 //        $datanormalisasi;
-        return $datanormalisasi->sortByDesc('nilai_preferensi');
+        $dataranking = $datanormalisasi->sortByDesc("nilai_preferensi");
+        $ranking = 1;
+        foreach ($dataranking as $rankingnya){
+            $rankingnya->ranking = $ranking;
+            $ranking += 1;
+        }
+        return $dataranking;
     }
 
     public function hasilrekomendasi(){

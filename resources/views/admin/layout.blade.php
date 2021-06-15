@@ -43,8 +43,8 @@
 {{--    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">--}}
 {{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/b-1.7.0/cr-1.5.3/date-1.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.css">--}}
     <!-- Template CSS -->
-{{--    {{asset('assets/css/style.css')}}--}}
-{{--    {{asset('assets/css/components.css')}}--}}
+    {{--    {{asset('assets/css/style.css')}}--}}
+    {{--    {{asset('assets/css/components.css')}}--}}
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
 </head>

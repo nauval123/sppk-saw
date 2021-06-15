@@ -36,7 +36,7 @@
                         </div>
                     @endif
                     @foreach($data as $datas)
-                    <form method="post" action="{{route("edit")}}">
+                    <form method="post" action="{{route("edit")}}" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header text-center">
                             <h2>Data Penduduk Baru</h2>
@@ -130,6 +130,10 @@
                                     <option value="0.5" @if($datas->StatusPhk==0.5){{"selected"}}@endif>belum</option>
                                     <option value="1" @if($datas->StatusPhk==1){{"selected"}}@endif>sudah</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label >Upload File Berkas</label>
+                                <input type="file" id="input-file-now" class="dropify" name="berkas" data-default-file="{{asset("storage/berkas/$datas->Berkas")}}" value="{{$datas->Berkas}}">
                             </div>
                         </div>
                         <div class="card-footer text-right">

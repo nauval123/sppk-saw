@@ -31,7 +31,7 @@
                                         </div>
                                     </div>
                                 @endif
-                        <form method="post" action="{{route("add")}}">
+                        <form method="post" action="{{route("add")}}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-header text-center">
                                 <h2>Data  Baru</h2>
@@ -125,10 +125,17 @@
                                         <option value="1" >PHK</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label >Upload File Berkas </label>
+                                    <input type="file" class="form-control" name="berkas">
+                                </div>
                             </div>
                             <div class="card-footer text-right">
                                 <button class="btn btn-success">simpan</button>
 {{--                                <a href="{{route('operator.index')}}" class="btn btn-warning">cancel</a>--}}
+                                <a href="{{route('dashboard')}}"   class="btn btn-primary">
+                                    kembali
+                                </a>
                             </div>
                         </form>
                     </div>

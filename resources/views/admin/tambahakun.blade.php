@@ -39,19 +39,19 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Nama</label>
-                            <input name="nama" type="text"  class="form-control" placeholder="Masukkan Nama Kepala Keluarga" value="{{old('nama')}}" required>
+                            <input name="nama" type="text"  class="form-control" placeholder="Masukkan Nama Lengkap" value="{{old('nama')}}" required>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input name="password" type="password" class="form-control" placeholder="Masukkan NIK Kepala Keluarga" value="{{old('nik')}}" maxlength="16" required>
+                            <input name="password" type="password" class="form-control" placeholder="Masukkan password" value="{{old('nik')}}" maxlength="16" required>
                         </div>
                         <div class="form-group">
-                            <label>Password Confirm</label>
-                            <input name="password_confirmation" type="password" class="form-control" placeholder="Masukkan NIK Kepala Keluarga" value="{{old('nik')}}" maxlength="16" required>
+                            <label>Konfirmasi Password </label>
+                            <input name="password_confirmation" type="password" class="form-control" placeholder="Masukkan password lagi" value="{{old('nik')}}" maxlength="16" required>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="email" type="text" class="form-control" placeholder="Masukkan NIK Kepala Keluarga" value="{{old('nik')}}" maxlength="16" required>
+                            <input name="email" type="text" class="form-control" placeholder="Masukkan Email" value="{{old('nik')}}"required>
                         </div>
                         <div class="form-group">
                             <label>Role</label>
