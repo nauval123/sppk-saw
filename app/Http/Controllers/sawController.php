@@ -102,6 +102,7 @@ class sawController extends Controller
             $rankingnya->ranking = $ranking;
             $ranking += 1;
         }
+//        dd($dataranking);
         return $dataranking;
     }
 

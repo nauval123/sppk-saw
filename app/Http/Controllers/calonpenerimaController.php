@@ -15,6 +15,7 @@ class calonpenerimaController extends Controller
 {
     public function index (){
         $periode=Periode::all();
+        $jumlahkk=Penduduk::all()->count();
         $dibawah=Penduduk::where('Penghasilan','<=','0.5')->with("penerima")->whereHas('penerima', function ($query)  {
             return $query->where('periode_id', 1);})->count();
         $phk=Penduduk::where('StatusPhk','1')->with("penerima")->whereHas('penerima', function ($query)  {
@@ -32,11 +33,12 @@ class calonpenerimaController extends Controller
 //        $penduduk= Penerima::whereHas("penduduk")->whereHas("periode")->get();
 //        $penduduk=Penerima::where("idPeriode",1)->with(['penduduk'])->get();
 //        dd($pivots);
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>1,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>1,'phk'=>$phk,"diterima"=>$diterima,"jumlahkk"=>$jumlahkk,"dibawah"=>$dibawah]);
     }
 
     public function periode(Request $request){
         $periode=Periode::all();
+        $jumlahkk=Penduduk::all()->count();
         $dibawah=Penduduk::where('Penghasilan','<=','0.5')->with("penerima")->whereHas('penerima', function ($query) use ($request) {
             return $query->where('periode_id', $request->periode);})->count();
         $phk=Penduduk::where('StatusPhk','1')->with("penerima")->whereHas('penerima', function ($query) use ($request) {
@@ -49,11 +51,12 @@ class calonpenerimaController extends Controller
         $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query) use ($request)  {
             return $query->where('periode_id', $request->periode);})->get();
 
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$request->periode,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$request->periode,'phk'=>$phk,"diterima"=>$diterima,"jumlahkk"=>$jumlahkk,"dibawah"=>$dibawah]);
     }
 
     public function periode2($id){
         $periode=Periode::all();
+        $jumlahkk=Penduduk::all()->count();
         $dibawah=Penduduk::where('Penghasilan','<=','0.5')->with("penerima")->whereHas('penerima', function ($query) use ($id) {
             return $query->where('periode_id', $id);})->count();
         $phk=Penduduk::where('StatusPhk','1')->with("penerima")->whereHas('penerima', function ($query) use ($id) {
@@ -66,7 +69,7 @@ class calonpenerimaController extends Controller
         $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query) use ($id)  {
             return $query->where('periode_id', $id);})->get();
 
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$id,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$id,'phk'=>$phk,"diterima"=>$diterima,"jumlahkk"=>$jumlahkk,"dibawah"=>$dibawah]);
     }
 
     public function create($id){
@@ -127,6 +130,7 @@ class calonpenerimaController extends Controller
                 $name = Str::random(4) ."-".$request->identitas.$request->idperiode.'.' . $fileType;
                 Storage::putFileAs('public/bukti', $request->file('bukti'), $name);
                 $penerima= Penerima::where([['penduduk_id','=',$request->idpenduduk],['periode_id','=',$request->idperiode]])->first();
+//                Storage::delete("bukti/".$penerima->bukti);
                 $penerima->status = $request->status;
                 $penerima->bukti = $name;
                 $penerima->save();
@@ -148,7 +152,20 @@ class calonpenerimaController extends Controller
             $periode  = new Periode();
             $periode->created_at=now();
             $periode->save();
-            $periodebaru= DB::table('periode')->latest('created_at')->first();
+            $penduduk=Penduduk::all();
+//            $periodebaru= DB::table('periode')->latest('created_at')->first();
+            $periodebaru= Periode::all();
+            foreach ($penduduk as $datapenerima){
+                foreach ($periodebaru as $periodebarus){
+                    Penerima::firstorCreate(array('penduduk_id' =>$datapenerima->id, 'periode_id' =>$periodebarus->id));
+                }
+//                $pendudukperiode = new Penerima();
+//                $pendudukperiode->penduduk_id=$datapenerima->id;
+//                $pendudukperiode->periode_id=$periodebaru->id;
+//                $pendudukperiode->status=0;
+//                $pendudukperiode->save();
+            }
+
 //            dd($periodebaru->id);
             return redirect()->route('periode-ke',[$periodebaru->id])->with('pesan','periode');
         }

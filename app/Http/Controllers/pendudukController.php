@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Penduduk;
 use App\Model\Penerima;
+use App\Model\Periode;
 use http\Params;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,6 +65,30 @@ class pendudukController extends Controller
                 $penduduk->StatusPhk = $temp_statusphk;
                 $penduduk->Berkas=$name;
                 $penduduk->save();
+                $calonpenerima=Penduduk::latest('created_at')->first();
+                $penerima=Penerima::all();
+                $periode=Periode::all();
+                foreach ($penerima as $penerimas){
+                    foreach ($periode as $periodes){
+                        Penerima::firstorCreate(array("penduduk_id"=>$calonpenerima->id,"periode_id"=>$periodes->id));
+                    }
+                }
+
+//                $periode= Periode::all();
+//                $calonpenerima= Penduduk::all();
+//                foreach ($calonpenerima as $calonpenerimas){
+//                    foreach ($periode as $periodes){
+//                        $penerima= new Penerima();
+//                        $penerima->periode_id=$periodes->id;
+//                        $penerima->penduduk_id=$calonpenerimas->id;
+//                        $penerima->status=0;
+//                        $penerima->save();
+//                    }
+//
+//                }
+
+
+
 
                 return redirect()->route('dashboard')->with('pesan','data berhasil ditambahkan');
             }

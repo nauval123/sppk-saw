@@ -22,14 +22,14 @@
         @endif
         <div class="section-body">
             <div class="row">
-{{--                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">--}}
-{{--                    <div class="card-box tilebox-one">--}}
-{{--                        <i class="fi-tag float-right"></i>--}}
-{{--                        <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>--}}
-{{--                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>--}}
-{{--                        <span class="badge badge-primary"></span>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="card-box tilebox-one">
+                        <i class="fi-tag float-right"></i>
+                        <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>
+                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>
+                        <span class="badge badge-primary"></span>
+                    </div>
+                </div>
 
                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div class="card-box tilebox-one">
@@ -50,18 +50,18 @@
                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div class="card-box tilebox-one">
                         <i class="fi-layers float-right"></i>
-                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang diterima periode -{{$dataidperiode}}-</h6>
+                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang telah dikirim periode -{{$dataidperiode}}-</h6>
                         <h4 class="mb-3"><span data-plugin="counterup">{{$diterima}}</span></h4>
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-                    <div class="card-box tilebox-one">
-                        <i class="fi-layers float-right"></i>
-                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang belum diterima periode -{{$dataidperiode}}-</h6>
-                        <h4 class="mb-3"><span data-plugin="counterup">{{$belumditerima}}</span></h4>
-                    </div>
-                </div>
+{{--                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">--}}
+{{--                    <div class="card-box tilebox-one">--}}
+{{--                        <i class="fi-layers float-right"></i>--}}
+{{--                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang belum diterima periode -{{$dataidperiode}}-</h6>--}}
+{{--                        <h4 class="mb-3"><span data-plugin="counterup">{{$belumditerima}}</span></h4>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
             <div class="card">
                 <div class="card-header">
