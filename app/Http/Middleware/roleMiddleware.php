@@ -18,6 +18,6 @@ class roleMiddleware
       if(in_array(auth()->user()->role,$roleName)){
         return $next($request);
       }
-      return redirect()->route("welcome");
+      return redirect()->back()->withErrors(["pesan", "dilarang mengakses!"]);
     }
 }

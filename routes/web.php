@@ -22,15 +22,17 @@ Route::group(['middleware' => ['auth','role:admin,superadmin,sukarelawan']], fun
     Route::get('/update/{id}', 'pendudukController@updatepage')->name('update');
     Route::get('/hasilrekomendasi', 'sawController@hasilrekomendasi')->name('hasilrekomendasi');
     Route::get('/penerima','calonpenerimaController@index')->name("penerima");
-    Route::get('/tambah-periode','calonpenerimaController@tambahperiode')->name("periode-tambah");
+   ;
 //    Route::post('/periode',"calonpenerimaController@periode")->name("periode");
     Route::get('/periode-id',"calonpenerimaController@periode")->name("periode-id");
     Route::get('/periode-id/{id}',"calonpenerimaController@periode2")->name("periode-ke");
     Route::get('/update-penerima/{periode}/{id}','calonpenerimaController@edit')->name('update-penerima');
-    Route::post('/updating-penerima',"calonpenerimaController@update")->name("updating-penerima");
+
 //    Route::get('/tambahpenerima/{id}','calonpenerimaController@create')->name("tambah-penerima");
 //    Route::post('/tambah-data-penerima',"calonpenerimaController@add")->name("tambah-data-penerima");
     Route::group(['middleware' => ['auth','role:superadmin,admin']], function() {
+        Route::get('/tambah-periode','calonpenerimaController@tambahperiode')->name("periode-tambah");
+        Route::post('/updating-penerima',"calonpenerimaController@update")->name("updating-penerima");
         Route::get('/data', 'pendudukController@data')->name('data');
         Route::get('/create', 'pendudukController@createpage')->name('create');
         Route::post('/add', 'pendudukController@store')->name('add');

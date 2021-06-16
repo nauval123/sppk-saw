@@ -20,6 +20,22 @@
                 </div>
             </div>
         @endif
+        @if ($errors->any())
+            <div class="form-group">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-info alert-has-icon alert-dismissible">
+                            <div class="alert-body">
+                                <button class="close" data-dismiss="alert">
+                                    <span>x</span>
+                                </button>
+                                <p>{{$error}}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="section-body">
             <div class="row">
                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
