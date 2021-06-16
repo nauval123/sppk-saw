@@ -86,7 +86,9 @@
                             @endforeach
                     </div>
                     <div class="card-footer text-right">
+                        @if(auth()->user()->role == "admin")
                         <button class="btn btn-success">simpan</button>
+                        @endif
                         {{--                                <a href="{{route('operator.index')}}" class="btn btn-warning">cancel</a>--}}
                         <a href="{{route("penerima")}}"   class="btn btn-primary">
                             kembali

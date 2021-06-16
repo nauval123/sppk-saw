@@ -33,7 +33,7 @@ class calonpenerimaController extends Controller
 //        $penduduk= Penerima::whereHas("penduduk")->whereHas("periode")->get();
 //        $penduduk=Penerima::where("idPeriode",1)->with(['penduduk'])->get();
 //        dd($pivots);
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>1,'phk'=>$phk,"diterima"=>$diterima,"jumlahkk"=>$jumlahkk,"dibawah"=>$dibawah]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>1,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
     }
 
     public function periode(Request $request){
@@ -51,12 +51,12 @@ class calonpenerimaController extends Controller
         $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query) use ($request)  {
             return $query->where('periode_id', $request->periode);})->get();
 
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$request->periode,'phk'=>$phk,"diterima"=>$diterima,"jumlahkk"=>$jumlahkk,"dibawah"=>$dibawah]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$request->periode,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
     }
 
     public function periode2($id){
         $periode=Periode::all();
-        $jumlahkk=Penduduk::all()->count();
+//        $jumlahkk=Penduduk::all()->count();
         $dibawah=Penduduk::where('Penghasilan','<=','0.5')->with("penerima")->whereHas('penerima', function ($query) use ($id) {
             return $query->where('periode_id', $id);})->count();
         $phk=Penduduk::where('StatusPhk','1')->with("penerima")->whereHas('penerima', function ($query) use ($id) {
@@ -69,7 +69,7 @@ class calonpenerimaController extends Controller
         $penduduk=Penduduk::with("periode")->whereHas('periode', function ($query) use ($id)  {
             return $query->where('periode_id', $id);})->get();
 
-        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$id,'phk'=>$phk,"diterima"=>$diterima,"jumlahkk"=>$jumlahkk,"dibawah"=>$dibawah]);
+        return view('admin.periode',["data"=>$penduduk,"dataperiode"=>$periode,"dataidperiode"=>$id,'phk'=>$phk,"diterima"=>$diterima,"belumditerima"=>$belumditerima,"dibawah"=>$dibawah]);
     }
 
     public function create($id){

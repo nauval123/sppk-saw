@@ -22,14 +22,14 @@
         @endif
         <div class="section-body">
             <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-                    <div class="card-box tilebox-one">
-                        <i class="fi-tag float-right"></i>
-                        <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>
-                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>
-                        <span class="badge badge-primary"></span>
-                    </div>
-                </div>
+{{--                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">--}}
+{{--                    <div class="card-box tilebox-one">--}}
+{{--                        <i class="fi-tag float-right"></i>--}}
+{{--                        <h6 class="text-muted text-uppercase mb-3">Jumlah Kepala Keluarga</h6>--}}
+{{--                        <h4 class="mb-3"><span data-plugin="counterup">10</span></h4>--}}
+{{--                        <span class="badge badge-primary"></span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div class="card-box tilebox-one">
@@ -50,25 +50,25 @@
                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div class="card-box tilebox-one">
                         <i class="fi-layers float-right"></i>
-                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang telah dikirim periode -{{$dataidperiode}}-</h6>
+                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang diterima  pada orang yang layak menerima periode -{{$dataidperiode}}-</h6>
                         <h4 class="mb-3"><span data-plugin="counterup">{{$diterima}}</span></h4>
                     </div>
                 </div>
 
-{{--                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">--}}
-{{--                    <div class="card-box tilebox-one">--}}
-{{--                        <i class="fi-layers float-right"></i>--}}
-{{--                        <h6 class="text-muted text-uppercase mb-3">Bantuan yang belum diterima periode -{{$dataidperiode}}-</h6>--}}
-{{--                        <h4 class="mb-3"><span data-plugin="counterup">{{$belumditerima}}</span></h4>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="card-box tilebox-one">
+                        <i class="fi-layers float-right"></i>
+                        <h6 class="text-muted text-uppercase mb-3">Yang tidak Layak Menerima bantuan pada periode -{{$dataidperiode}}-</h6>
+                        <h4 class="mb-3"><span data-plugin="counterup">{{$belumditerima}}</span></h4>
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <div class="card-header">
                     @if(auth()->user()->role == "admin" or auth()->user()->role == "sukarelawan" or auth()->user()->role == "superadmin")
                         <h4>
                             @if(auth()->user()->role == "admin")
-                                <a href="{{route('periode-tambah')}}" class="btn btn-primary">
+                                <a href="{{route('periode-tambah')}}" class="btn btn-primary" onclick="return confirm('menambah Periode?')">
                                     +  periode baru
                                 </a>
                             @endif
@@ -187,9 +187,9 @@
 {{--                                            @php(dd($datapegawai->periode))--}}
                                             @if($pivots->id == $dataidperiode)
                                                 @if($pivots->pivot->status == 1)
-                                                    <span class="badge badge-primary"> Terkirim </span>
+                                                    <span class="badge badge-primary"> Layak </span>
                                                 @elseif($pivots->pivot->status == 0)
-                                                    <span class="badge badge-danger"> Belum Terkirim </span>
+                                                    <span class="badge badge-danger"> tidak Layak </span>
                                                 @endif
                                             @endif
                                         @endforeach
